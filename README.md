@@ -19,12 +19,12 @@ A multi-threaded network proxy server capable of handling standard HTTP forwardi
 
 1. Open a terminal (PowerShell or CMD).
 2. Navigate to the `src` directory:
-   cd src
+   ``cd src``
 3. Compile the project using Make:
-   mingw32-make
+   `mingw32-make` OR `make`
    
    (OR manually using GCC):
-   gcc main.c proxy.c parser.c logger.c -o proxy_server -lws2_32 -I../include
+   `gcc main.c proxy.c parser.c logger.c -o proxy_server -lws2_32 -I../include`
 
 ## How to Run
 
@@ -63,9 +63,15 @@ To verify functionality, open a separate terminal and use `curl`:
 
 ## Logging
 Check `src/logs/proxy.log` to see a record of all requests:
+
 [2025-12-23 15:21:57] Client: 127.0.0.1 | Request: example.com | Status: 200
+
 [2025-12-23 15:21:58] Client: 127.0.0.1 | Request: www.google.com | Status: 200
+
 [2025-12-23 15:21:59] Client: 127.0.0.1 | Request: blocked.com | Status: 403
+
 [2025-12-23 15:54:14] Client: 127.0.0.1 | Request: example.com | Status: 200
+
 [2025-12-23 15:54:15] Client: 127.0.0.1 | Request: www.google.com | Status: 200
+
 [2025-12-23 15:54:16] Client: 127.0.0.1 | Request: blocked.com | Status: 403
