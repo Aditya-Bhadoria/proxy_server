@@ -1,0 +1,2 @@
+[2025-12-23 13:06:07] Client: 127.0.0.1 | Request: example.com | Status: 200
+[2025-12-23 13:06:20] Client: 127.0.0.1 | Request: blocked.com | Status: 403
