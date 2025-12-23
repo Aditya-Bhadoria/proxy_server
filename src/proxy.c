@@ -1,14 +1,52 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ws2tcpip.h>
 #include "../include/proxy.h"
 
-int is_blocked(char *host) {
-    FILE *file = fopen(BLOCKED_FILE, "r");
-    if (!file) return 0;
+void trim(char *s) {
+    char *p = s;
+    int l = strlen(p);
+    while(l > 0 && isspace(p[l - 1])) p[--l] = 0;
+    while(*p && isspace(*p)) p++;
+    memmove(s, p, l + 1);
+}
+
+void load_config(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        printf("Could not open config file %s. Using defaults.\n", filename);
+        server_config.port = 8888;
+        strcpy(server_config.log_path, "logs/proxy.log");
+        strcpy(server_config.blocked_file, "../config/blocked.txt");
+        return;
+    }
+
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        line[strcspn(line, "\r\n")] = 0;
-        if (strstr(host, line) != NULL) {
+        if (line[0] == '#' || strlen(line) < 3) continue;
+
+        char *key = strtok(line, "=");
+        char *val = strtok(NULL, "\n");
+        if (key && val) {
+            trim(key);
+            trim(val);
+            
+            if (strcmp(key, "PORT") == 0) server_config.port = atoi(val);
+            else if (strcmp(key, "LOG_PATH") == 0) strcpy(server_config.log_path, val);
+            else if (strcmp(key, "BLOCKED_LIST") == 0) strcpy(server_config.blocked_file, val);
+        }
+    }
+    fclose(file);
+}
+
+int is_blocked(char *host) {
+    FILE *file = fopen(server_config.blocked_file, "r");
+    if (!file) return 0;
+    
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\r\n")] = 0; 
+        if (strlen(line) > 0 && strstr(host, line) != NULL) {
             fclose(file);
             return 1; 
         }
@@ -55,6 +93,7 @@ void handle_https_tunnel(SOCKET client_socket, SOCKET server_socket) {
         FD_ZERO(&readfds);
         FD_SET(client_socket, &readfds);
         FD_SET(server_socket, &readfds);
+        
         max_sd = (client_socket > server_socket) ? client_socket : server_socket;
 
         activity = select(max_sd + 1, &readfds, NULL, NULL, NULL);

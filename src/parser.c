@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../include/proxy.h" 
+#include "../include/proxy.h"
 
 int parse_request(char *buffer, ParsedRequest *req) {
     char buf_copy[BUFFER_SIZE];

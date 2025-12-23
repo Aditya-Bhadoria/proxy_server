@@ -5,8 +5,11 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 HANDLE hLogMutex;
+ServerConfig server_config;
 
 int main() {
+    load_config("../config/server.conf");
+
     WSADATA wsaData;
     SOCKET server_fd, client_socket;
     struct sockaddr_in address;
@@ -14,18 +17,24 @@ int main() {
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return 1;
 
-    CreateDirectory("logs", NULL);
+    CreateDirectory("logs", NULL); 
     hLogMutex = CreateMutex(NULL, FALSE, NULL);
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    
+    address.sin_port = htons(server_config.port);
 
-    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) == SOCKET_ERROR) return 1;
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) == SOCKET_ERROR) {
+        printf("Bind failed on port %d. Error: %d\n", server_config.port, WSAGetLastError());
+        return 1;
+    }
     listen(server_fd, 10);
 
-    printf("Modular Proxy Server Active on Port %d\n", PORT);
+    printf("Modular Proxy Server Active on Port %d\n", server_config.port);
+    printf("Logging to: %s\n", server_config.log_path);
+    printf("Blocked List: %s\n", server_config.blocked_file);
 
     while (1) {
         client_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen);

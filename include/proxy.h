@@ -4,11 +4,15 @@
 #include <winsock2.h>
 #include <windows.h>
 
-#define PORT 8888
 #define BUFFER_SIZE 4096
+typedef struct {
+    int port;
+    char log_path[256];
+    char blocked_file[256];
+} ServerConfig;
 
-#define BLOCKED_FILE "../config/blocked.txt" 
-#define LOG_FILE "logs/proxy.log"
+extern ServerConfig server_config;
+extern HANDLE hLogMutex;
 
 typedef struct {
     char method[16];
@@ -16,6 +20,7 @@ typedef struct {
     int port;
 } ParsedRequest;
 
+void load_config(const char *filename);
 void log_request(char *client_ip, char *url, int status_code);
 int parse_request(char *buffer, ParsedRequest *req);
 int is_blocked(char *host);
