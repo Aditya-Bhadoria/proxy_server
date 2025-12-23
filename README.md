@@ -29,7 +29,7 @@ A multi-threaded network proxy server capable of handling standard HTTP forwardi
 ## How to Run
 
 1. Start the server from the `src` directory:
-   .\proxy_server.exe
+   `.\proxy_server.exe`
 
    Output: "Modular Proxy Server Active on Port 8888"
 
@@ -47,25 +47,25 @@ A multi-threaded network proxy server capable of handling standard HTTP forwardi
 To verify functionality, open a separate terminal and use `curl`:
 
 1. **Test Standard HTTP (Forwarding):**
-   curl -v -x http://localhost:8888 http://example.com
+   `curl -v -x http://localhost:8888 http://example.com`
 
 2. **Test HTTPS (Tunneling):**
-   curl -v -x http://localhost:8888 https://www.google.com
+   `curl -v -x http://localhost:8888 https://www.google.com`
 
 3. **Test Filtering (Blocking):**
-   curl -v -x http://localhost:8888 http://blocked.com
+   `curl -v -x http://localhost:8888 http://blocked.com`
    (Should return "403 Forbidden")
 
 4. **Automated Test Suite:**
    Navigate to the `tests` folder and run the batch script:
-   cd ../tests
-   .\run_tests.bat
+   `cd ../tests`
+   `.\run_tests.bat`
 
 ## Logging
 Check `src/logs/proxy.log` to see a record of all requests:
-[2025-12-23 15:15:09] Client: 127.0.0.1 | Request: example.com | Status: 200
-[2025-12-23 15:15:09] Client: 127.0.0.1 | Request: www.google.com | Status: 200
-[2025-12-23 15:15:10] Client: 127.0.0.1 | Request: blocked.com | Status: 403
 [2025-12-23 15:21:57] Client: 127.0.0.1 | Request: example.com | Status: 200
 [2025-12-23 15:21:58] Client: 127.0.0.1 | Request: www.google.com | Status: 200
 [2025-12-23 15:21:59] Client: 127.0.0.1 | Request: blocked.com | Status: 403
+[2025-12-23 15:54:14] Client: 127.0.0.1 | Request: example.com | Status: 200
+[2025-12-23 15:54:15] Client: 127.0.0.1 | Request: www.google.com | Status: 200
+[2025-12-23 15:54:16] Client: 127.0.0.1 | Request: blocked.com | Status: 403
