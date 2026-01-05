@@ -47,13 +47,13 @@ A multi-threaded network proxy server capable of handling standard HTTP forwardi
 To verify functionality, open a separate terminal and use `curl`:
 
 1. **Test Standard HTTP (Forwarding):**
-   `curl -v -x http://localhost:8888 http://example.com`
+   `curl.exe -v -x http://localhost:8888 http://example.com`
 
 2. **Test HTTPS (Tunneling):**
-   `curl -v -x http://localhost:8888 https://www.google.com`
+   `curl.exe -v -x http://localhost:8888 https://www.google.com`
 
 3. **Test Filtering (Blocking):**
-   `curl -v -x http://localhost:8888 http://blocked.com`
+   `curl.exe -v -x http://localhost:8888 http://blocked.com`
    (Should return "403 Forbidden")
 
 4. **Automated Test Suite:**
