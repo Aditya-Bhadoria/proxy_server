@@ -1,6 +1,4 @@
-[2025-12-23 15:21:57] Client: 127.0.0.1 | Request: example.com | Status: 200
-[2025-12-23 15:21:58] Client: 127.0.0.1 | Request: www.google.com | Status: 200
-[2025-12-23 15:21:59] Client: 127.0.0.1 | Request: blocked.com | Status: 403
-[2025-12-23 15:54:14] Client: 127.0.0.1 | Request: example.com | Status: 200
-[2025-12-23 15:54:15] Client: 127.0.0.1 | Request: www.google.com | Status: 200
-[2025-12-23 15:54:16] Client: 127.0.0.1 | Request: blocked.com | Status: 403
+[2026-01-05 12:45:16] Client: 127.0.0.1 | Request: example.com | Status: 200
+[2026-01-05 12:45:41] Client: 127.0.0.1 | Request: example.com | Status: 200
+[2026-01-05 12:46:07] Client: 127.0.0.1 | Request: blocked.com | Status: 403
+[2026-01-05 12:46:27] Client: 127.0.0.1 | Request: google.com | Status: 200
