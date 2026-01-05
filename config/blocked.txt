@@ -1,3 +1,4 @@
 blocked.com
 badsite.org
 facebook.com
+microsoft.com
